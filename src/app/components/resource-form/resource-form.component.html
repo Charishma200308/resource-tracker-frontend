@@ -164,16 +164,6 @@
     </div>
 
     <div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required formControlName="agree" />
-        <label style="font-size: 14px;" class="form-check-label" for="invalidCheck">Agree to terms and
-          conditions</label>
-        <br />
-        @if(userform.controls['agree'].errors?.['required'] && userform.controls['agree'].touched)
-        {
-        <span style="font-size: 14px;">You must agree before submitting.</span>
-        }
-      </div>
       <div style="align-items: center;">
         <button style="width:360px;margin-left: 5px;color: black;" class="btn btn-primary" type="submit"
           (click)="confirmSaveFunction()" [disabled]="!userform.valid"

@@ -211,8 +211,7 @@ export class ResourceFormComponent {
     location: new FormControl(""),
     mail: new FormControl("", [Validators.email, Validators.required]),
     doj: new FormControl("", Validators.required),
-    remarks: new FormControl(""),
-    agree: new FormControl(false, Validators.requiredTrue)
+    remarks: new FormControl("")
   })
 
   editIndex: number | null = null;
