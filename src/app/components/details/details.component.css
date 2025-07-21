@@ -1,0 +1,364 @@
+
+/* Container div to center the table */
+div {
+  display: flex;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+mat-icon {
+  transition: transform 0.2s ease;
+}
+
+
+
+button:hover mat-icon {
+  transform: scale(1.1);
+}
+
+/* Table styling */
+table {
+  width: 70%;
+  margin-top: 30px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  overflow: hidden; /* round corners for the whole table */
+  height: auto;
+}
+
+/* Table header */
+thead tr {
+  background: linear-gradient(90deg, #005f99, #007acc);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+thead th {
+  padding: 15px 20px;
+}
+
+
+/* Table body rows */
+tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background-color: #f0f8ff; /* subtle blue hover */
+}
+
+/* Table body cells */
+tbody td {
+  padding: 4px 10px;
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Button styling */
+button {
+  
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+button:hover {
+  background-color: #005f99;
+}
+
+
+/* Responsive: Scroll horizontally on smaller screens */
+@media (max-width: 768px) {
+  div {
+    padding: 0 10px;
+  }
+  table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+/* Buttons */
+button {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(30, 136, 229, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+  user-select: none;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #88b7e1, #5789c2);
+  box-shadow: 0 8px 20px rgba(21, 101, 192, 0.6);
+  transform: translateY(-3px);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  div {
+    padding: 10px;
+  }
+  table {
+    width: 100%;
+    border-spacing: 0 10px;
+  }
+  thead th, tbody td {
+    padding: 12px 10px;
+  }
+  button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Shared Material-style buttons */
+button.mat-button {
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 6px 16px;
+  margin-right: 8px;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+/* More button - Gray */
+.btn-view {
+  background: linear-gradient(135deg, #528ae3, #597cdb);
+  color: #fff;
+}
+.btn-view:hover {
+  background: linear-gradient(135deg, #3977b9, #3773cd);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 300px;
+}
+
+.modal-box p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.pagination-bar {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 5px 0;
+  margin-top: 10px;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.05);
+  font-size: 10px;
+  user-select: none;
+}
+
+.pagination-bar button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 3px;     /* subtle rounding */
+  padding: 2px 8px;       /* smaller padding */
+  font-size: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  line-height: 1;
+  min-width: 20px;        /* consistent button width */
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.pagination-bar button:hover:not([disabled]) {
+  background-color: #125ca3;
+}
+
+.pagination-bar button[disabled] {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.page-input {
+  width: 30px;
+  text-align: center;
+  font-size: 10px;
+  margin: 0 6px;
+  padding: 6px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 15px;
+}
+
+
+.welcome-section {
+  display: flex;
+  align-items: center; /* Aligns text and image in one line */
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #cbe3f7;
+  height: 100px;
+}
+
+.welcome-text h1 {
+  margin: 0;
+  font-size: 25px;
+  color: #333;
+}
+
+.welcome-image img {
+  height: 100px;
+  width: 150px;
+  object-fit: cover;
+}
+
+
+.yes-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+.no-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* Edit button - Green */
+.btn-edit {
+  background: linear-gradient(135deg, #66bb6a, #43a047);
+  color: #fff;
+}
+.btn-edit:hover {
+  background: linear-gradient(135deg, #43a047, #2e7d32);
+}
+
+/* Delete icon button - Red */
+.btn-delete mat-icon {
+  color: #e53935;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.btn-delete:hover mat-icon {
+  transform: scale(1.2);
+  color: #b71c1c;
+}
+
+mat-icon.delete-icon {
+  color: #e53935;
+  font-size: 32px;          /* Bigger icon size */
+  width: 60px;              /* Wider clickable area */
+  height: 60px;             /* Make height same as width for square */
+  cursor: pointer;
+  position: relative;
+  top: 10px;                 /* Move down */
+  display: inline-flex;     /* So width and height take effect */
+  align-items: center;      /* Center icon vertically */
+  justify-content: center;  /* Center icon horizontally */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+mat-icon.delete-icon:hover {
+  color: #b71c1c;
+  transform: scale(1.3);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #528ae3, #597cdb);
+  padding: 1rem;
+  color: white;
+  margin-top: 20px;
+  height: 23px;
+}
+
+.footer-section {
+  flex: 1;
+  text-align: center;
+}
+
+.Left {
+  text-align: left;
+}
+
+.Center {
+  text-align: center;
+}
+
+.Right {
+  text-align: right;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* NEW wrapper for page content */
+.page-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Your existing table wrapper */
+.home-background {
+  height: 310px;
+}
+
+.fixed-row-height {
+  height: 75px;
+  vertical-align: middle;
+}
+

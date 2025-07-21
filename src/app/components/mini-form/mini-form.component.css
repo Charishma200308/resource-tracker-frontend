@@ -1,0 +1,170 @@
+
+.bulk-edit-panel h3 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+/* Two-column grid layout */
+.bulk-edit-panel form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px 40px;
+}
+
+/* Input and Select Fields */
+.bulk-edit-panel .form-control,
+.bulk-edit-panel .form-select {
+  height: 38px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition: border 0.3s ease;
+}
+
+.bulk-edit-panel .form-control:focus,
+.bulk-edit-panel .form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+  outline: none;
+}
+
+/* Label styling */
+.bulk-edit-panel label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Full-width Date field in one column */
+.bulk-edit-panel input[type="date"] {
+  width: 100%;
+}
+
+/* Button styling */
+.bulk-edit-panel .col-12 {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.bulk-edit-panel button.btn-success {
+  padding: 10px 30px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.bulk-edit-panel button.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bulk-edit-panel form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fix width for all inputs and selects */
+.bulk-edit-panel .form-control,
+.bulk-edit-panel .form-select {
+  width: 100%;      /* Make them take full width of their grid column */
+  max-width: 320px; /* Set max width to control size */
+  box-sizing: border-box; /* Include padding & border in width */
+  height: 38px;
+  padding: 6px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition: border 0.3s ease;
+}
+
+.bulk-edit-panel form {
+  max-width: 650px; /* smaller width */
+  margin: 0 auto;   /* center horizontally */
+  padding: 15px 20px;
+  background: #e6f0ff; /* subtle background */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 40px;
+  margin-bottom: 30px;
+  font-size: 17px;
+}
+
+::ng-deep .mat-field-compact .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+
+::ng-deep .mat-field-compact .mat-form-field-infix {
+  padding: 0 8px !important;
+  height: 32.6px !important;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+::ng-deep .mat-field-compact .mat-select-trigger {
+  min-height: 32.6px !important;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .mat-field-compact .mat-select {
+  height: 32.6px !important;
+  padding: 0px !important;
+  font-size: 0.93rem;
+}
+
+::ng-deep .mat-field-compact .mat-form-field-flex {
+  height: 32.6px !important;
+}
+
+::ng-deep .mat-field-compact {
+  width: 100%;                /* Make it full-width */
+  max-width: 100%;            /* Prevent shrinking */
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none !important;
+}
+
+::ng-deep .mdc-line-ripple {
+  display: none !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  border-radius: 7px !important;
+  overflow: hidden;
+  background-color: #fff; /* or match your theme */
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-outline {
+  border-radius: 7px !important;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none !important; /* hides the bottom underline */
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0px !important; /* removes extra space */
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+

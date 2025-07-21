@@ -1,0 +1,249 @@
+<div class="toolbar">
+  <div class="left-buttons">
+    <button routerLink="/Home">Home</button>
+  </div>
+  
+  <div class="right-button">
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.8px;">
+      
+
+      <button (click)="exportToCSV()"
+        style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px;border: none; border-radius: 4px; cursor: pointer;">
+        <mat-icon style="font-size: 20px;">file_upload</mat-icon>
+        <span>Export CSV</span>
+      </button>
+
+      <button routerLink="/Form"
+        style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px;border: none; border-radius: 4px; cursor: pointer;">
+        <mat-icon style="font-size: 20px;">assignment</mat-icon>
+        <span>Add New Form</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h2>
+      <mat-icon color="accent" style="vertical-align: middle; margin-right: 8px;">track_changes</mat-icon>
+      Welcome to Resource Tracker Application
+    </h2>
+
+    <div class="section">
+      <div class="section-header">
+        <mat-icon class="section-icon" color="primary">home</mat-icon>
+        <h3>Home</h3>
+        <button routerLink="/Home" (click)="closeModal()">Go to Home</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <mat-icon class="section-icon" color="primary">support_agent</mat-icon>
+        <h3>Helpdesk</h3>
+        <button routerLink="/help-desk" (click)="closeModal()">Go to Helpdesk</button>
+      </div>
+    </div>
+
+    <div class="closebuttons">
+      <div class="remind-button-wrapper">
+        <button (click)="remindMeNextTime()">Remind Me Next Time</button>
+      </div>
+
+      <div class="dimiss">
+        <button (click)="dismissForever()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main content -->
+<router-outlet></router-outlet>
+
+
+<!-- <footer class="footer">
+    <div class="footer-section Left" style="margin-top: 5px;">
+      <mat-icon style="margin-right: 8px;margin-bottom: 3px;">assignment_ind</mat-icon>
+      Client Manager :<b style="margin-left: 3px;">Scott Drake</b>
+    </div>
+    <div class="footer-section Center">Privacy Policy | Terms of Use </div>
+    <div class="footer-section Right">
+      &copy; 2012–2025 Schneider Electric Industries SAS. All Rights Reserved.
+    </div>
+  </footer> -->
+
+<!-- <app-resource-form 
+  *ngIf="changeTab === 'Details'" 
+  [editDetailData]="editDetailData"
+  (details)="addDetails($event)">
+</app-resource-form>
+
+<app-details 
+*ngIf="changeTab === 'Home'" 
+[details]="details" 
+(moreDetails)="showDetailInTab($event)" 
+(edit)="onEdit($event)">
+</app-details>
+
+<app-home 
+*ngIf="changeTab === 'PersonDetails'" 
+[details]="[selectedDetail]">
+</app-home> -->
+
+
+<!-- <div *ngIf="changeTab==='Details'">
+  <form class="row g-3 needs-validation" [formGroup]="userform">
+    <div class="col-md-4">
+      <label for="employeeId" class="form-label">EMP ID</label>
+      <input id="employeeId" type="number" formControlName="empid" class="form-control" placeholder="Enter your ID...." />
+      <span [hidden]="!userform.controls['empid'].errors?.['min']">Please enter valid Id</span>
+      @if(userform.controls['empid'].errors?.['required'] && userform.controls['empid'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-4">
+      <label for="name" class="form-label">Resource Name</label>
+      <input id="name" type="text" formControlName="name" class="form-control" placeholder="Enter Your Name...." />
+      <span [hidden]="!userform.controls['name'].errors?.['minlength']">Please enter valid name</span>
+      @if(userform.controls['name'].errors?.['required'] && userform.controls['name'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-4">
+      <label for="designationSelect" class="form-label">Designation</label>
+      <select id="designationSelect" formControlName="dsgntion" class="form-select" placeholder="Enter Your designation....">
+        <span [hidden]="!userform.controls['dsgntion'].errors?.['required']">This is required</span>
+        <option selected disabled value="">Select your designation</option>
+        <option value="manager">Manager</option>
+        <option value="developer">Developer</option>
+        <option value="designer">Designer</option>
+        <option value="qa">Quality Analyst</option>
+        <option value="intern">Trainee</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="reportingTo" class="form-label">Reporting To</label>
+      <input id="reportingTo" type="text" formControlName="reporting" class="form-control" placeholder="Enter the details...." />
+      @if(userform.controls['reporting'].errors?.['required'] && userform.controls['reporting'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-4">
+      <label for="billable" class="form-label">Billable</label>
+      <select id="billable" class="form-select" formControlName="billable">
+        <span [hidden]="!userform.controls['billable'].errors?.['required']">This is required</span>
+        <option selected disabled value="">Select</option>
+        <option value="Yes">Yes</option>
+        <option Value="No">No</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="technology" class="form-label">Technology</label>
+      <input id="technology" type="text" formControlName="skills" class="form-control" placeholder="Enter Your skills...." />
+      @if(userform.controls['skills'].errors?.['required'] && userform.controls['skills'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-5">
+      <label for="projectAllocation" class="form-label">Project Allocation</label>
+      <input id="projectAllocation" type="text" formControlName="projalloc" class="form-control" placeholder="Enter the details...." />
+      @if(userform.controls['projalloc'].errors?.['required'] && userform.controls['projalloc'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-5">
+      <label for="location" class="form-label">Location</label>
+      <select id="location" class="form-select" aria-label="location" formControlName="location" placeholder="Enter Your location....">
+        <span [hidden]="!userform.controls['location'].errors?.['required']">This is required</span>
+        <option selected disabled value="">Select your Location</option>
+        <option value="manager">Hyderabad</option>
+        <option value="developer">Banglore</option>
+        <option value="designer">Mumbai</option>
+      </select>
+    </div>
+
+    <div class="col-md-5">
+      <label for="emailInput" class="form-label">Email address</label>
+      <input id="emailInput" type="email" class="form-control" placeholder="name@example.com" formControlName="mail" />
+      @if(userform.controls['mail'].errors?.['required'] && userform.controls['mail'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-5">
+      <label for="start" class="form-label">CTE DOJ</label>
+      <input type="date" id="start" formControlName="doj" class="form-control" />
+      @if(userform.controls['doj'].errors?.['required'] && userform.controls['doj'].touched)
+      {
+        <span>This is required</span>
+      }
+    </div>
+
+    <div class="col-md-5">
+      <label for="remarks" class="form-label">Remarks</label>
+      <input id="remarks" type="text" class="form-control" formControlName="remarks" placeholder="Enter Your Remarks...." />
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required formControlName="agree" />
+        <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
+        <br />
+        @if(userform.controls['agree'].errors?.['required'] && userform.controls['agree'].touched)
+        {
+          <span>You must agree before submitting.</span>
+        }
+      </div>
+      <button class="btn btn-primary" type="submit" (click)="savefun()" [disabled]="!userform.valid">Submit form</button>
+    </div>
+  </form>
+</div> -->
+
+
+<!-- <div *ngIf="changeTab==='Home'">
+  <table border="1" cellspacing="0" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Emp ID</th>
+      <th>Name</th>
+      <th>Designation</th>
+      <th>Reporting To</th>
+      <th>Billable</th>
+      <th>Skills</th>
+      <th>Project Allocation</th>
+      <th>Location</th>
+      <th>Email</th>
+      <th>Date of Joining</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let detail of details">
+      <td>{{ detail.empid }}</td>
+      <td>{{ detail.name }}</td>
+      <td>{{ detail.dsgntion }}</td>
+      <td>{{ detail.reporting }}</td>
+      <td>{{ detail.billable }}</td>
+      <td>{{ detail.skills }}</td>
+      <td>{{ detail.projalloc }}</td>
+      <td>{{ detail.location }}</td>
+      <td>{{ detail.mail }}</td>
+      <td>{{ detail.doj }}</td>
+      <td>{{ detail.remarks }}</td>
+    </tr>
+  </tbody>
+</table>
+</div> -->

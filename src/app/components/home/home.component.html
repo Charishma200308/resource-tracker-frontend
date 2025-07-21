@@ -1,0 +1,19 @@
+<div *ngFor="let detail of details">
+  <h3>Full Details for {{ detail.name }}</h3>
+  <ul>
+    <li><strong>Emp ID:</strong> {{ detail.empId }}</li>
+    <li><strong>Designation:</strong> {{ detail.dsgntion }}</li>
+    <li><strong>Reporting:</strong> {{ detail.reporting }}</li>
+    <li><strong>Billable:</strong> {{ detail.billable }}</li>
+    <li><strong>Skills:</strong> {{ detail.skills }}</li>
+    <li><strong>Project Allocation:</strong> {{ detail.projalloc }}</li>
+    <li><strong>Location:</strong> {{ detail.location }}</li>
+    <li><strong>Email:</strong> {{ detail.mail }}</li>
+    <li><strong>Date of Joining:</strong> {{ detail.doj }}</li>
+    <li><strong>Remarks:</strong> {{ detail.remarks }}</li>
+  </ul>
+  <button (click)="downloadDetailsAsPDF(detail)">
+    <span class="material-icons" style="vertical-align: middle; margin-right: 6px;">download</span>
+    Download Details
+  </button>
+</div>

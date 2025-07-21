@@ -1,0 +1,150 @@
+<!-- <kendo-grid [data]="details">
+  <kendo-grid-column field="empid" title="Emp ID" [width]="120" ></kendo-grid-column>
+  <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+  <kendo-grid-column field="dsgntion" title="Designation"></kendo-grid-column>
+  <kendo-grid-column field="projalloc" title="Project Allocation" ></kendo-grid-column>
+  <kendo-grid-column title="Actions">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button (click)="Showhim(dataItem.empid)" style="margin-right: 10px ;">More</button>
+        <button (click)="editDetaills(dataItem.empid)"style="margin-right: 10px ;">Edit</button>
+        <button (click)="delete(dataItem.empid)">Delete</button>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid> -->
+
+<div class="page-wrapper">
+  <div class="welcome-section">
+    <div class="welcome-text">
+      <h1><b>Welcome to Resource Tracker Application</b></h1>
+    </div>
+    <div class="welcome-image">
+      <img src="\assets\time-tracking-software.png" alt="Welcome Image">
+    </div>
+  </div>
+  <br>
+
+  <div style="display: flex; gap: 10px; align-items: left;justify-content: flex-start;margin-left: 20px;">
+  <button 
+    style="width: 150px; background-color: rgb(81, 99, 235); color: white;" 
+    (click)="toggleBulkEdit()">
+    {{ bulkEditMode ? 'Cancel Edit' : 'Edit Multiple' }}
+  </button>
+
+  <button 
+    style="width: 200px; background-color: green; color: white;" 
+    [disabled]="selectedResourceIds.size <= 1"
+    (click)="navigateToBulkEdit()">
+    Continue with Edit
+  </button>
+  <button (click)="csvInput.click()"
+      style="margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; border: none; border-radius: 4px; cursor: pointer;margin-right: 20px;background-color: blue;border-radius: 20px;">
+        <mat-icon style="font-size: 20px;">download</mat-icon>
+        Import CSV
+      </button>
+      <input #csvInput type="file" accept=".csv" style="display: none" (change)="handleCSVUpload($event)" />
+</div>
+
+  <div class="home-background"> 
+    <table cellspacing="0" cellpadding="8">
+      <thead>
+        <tr>
+          <th *ngIf="bulkEditMode"></th>
+          <th>Emp ID</th>
+          <th (click)="sortData('name')">
+            Name
+            <span *ngIf="sortColumn === 'name'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="sortData('dsgntion')">
+            Designation
+            <span *ngIf="sortColumn === 'dsgntion'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+
+          <!-- <th>Reporting To</th>
+      <th>Billable</th>
+      <th>Skills</th> -->
+          <th>Project Allocation</th>
+          <!-- <th>Location</th>
+      <th>Email</th>
+      <th>Date of Joining</th>
+      <th>Remarks</th> -->
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of pagedDetails" class="fixed-row-height">
+          <td *ngIf="bulkEditMode">
+            <input type="checkbox" [value]="detail.empId" (change)="onResourceSelect(detail.empId, $event)" />
+          </td>
+          <td>{{ detail.empId }}</td>
+          <td>{{ detail.name }}</td>
+          <td>{{ detail.dsgntion }}</td>
+          <!-- <td>{{ detail.reporting }}</td>
+      <td>{{ detail.billable }}</td>
+      <td>{{ detail.skills }}</td> -->
+          <td>{{ detail.projalloc }}</td>
+          <!-- <td>{{ detail.location }}</td>
+      <td>{{ detail.mail }}</td>
+      <td>{{ detail.doj }}</td>
+      <td>{{ detail.remarks }}</td> -->
+          <td>
+            <button mat-button class="btn-view" (click)="Showhim(detail.empId)"
+              style="margin-right: 20px;margin-bottom: 10px;">More</button>
+            <button mat-button class="btn-edit" (click)="editDetaills(detail.empId)"
+              style="margin-right: 10px;">Edit</button>
+            <!-- <button mat-icon-button class="btn-delete" (click)="delete(detail.empid)" matTooltip="Delete">
+    <mat-icon>delete</mat-icon>
+  </button> -->
+            <mat-icon class="delete-icon" (click)="deleteFunction(detail.empId)" matTooltip="Delete">delete</mat-icon>
+          </td>
+        </tr>
+
+        <tr *ngFor="let empty of createEmptyRows()" class="fixed-row-height">
+          <td colspan="5"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="showDelete" class="modal-overlay">
+      <div class="modal-box">
+        <div>
+          <p>Do you wish to continue with Deletion?</p>
+        </div>
+        <div class="modal-buttons" style="margin-top: 50px;">
+          <button class="yes-btn" (click)="delete(selectedEmpIdForDelete!)">Yes</button>
+          <button class="no-btn" (click)="closeDelete()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="pagination-bar">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      &#x25C0;
+    </button>
+
+    <input type="number" [(ngModel)]="inputPage" (keydown.enter)="goToPage(inputPage)" min="1" [max]="totalPages"
+      class="page-input" />
+    <span style="margin-top: 3px;margin-right: 8px;">of {{ totalPages }}</span>
+
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      &#x25B6;
+    </button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-section Left" style="margin-top: 5px;">
+    <mat-icon style="margin-right: 8px;margin-bottom: 3px;">assignment_ind</mat-icon>
+    Client Manager :<b style="margin-left: 3px;">Scott Drake</b>
+  </div>
+  <div class="footer-section Center">Privacy Policy | Terms of Use </div>
+  <div class="footer-section Right">
+    &copy; 2012–2025 Schneider Electric Industries SAS. All Rights Reserved.
+  </div>
+</footer>

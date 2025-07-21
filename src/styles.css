@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.mat-mdc-text-field-wrapper {
+    background-color: transparent;
+    background: none;
+    border: 1px solid #ccc;
+    max-height: 38px;
+    padding: 0px;
+    width: 300px;
+}
+
+div.mat-mdc-form-field-infix {
+    max-height: 32.6px;
+    margin: 0;
+    padding: 0 !important;
+    width: 240px;
+}
+
+.mat-mdc-form-field-focus-overlay {
+    padding: 0;
+}
+
+.mat-mdc-text-field-wrapper mdc-text-field mdc-text-field--filled mdc-text-field--no-label {
+    margin: 0;
+    padding: 0;
+}
+
+.mdc-text-field--no-label {
+    padding: 0;
+    margin: 0;
+}
+
+
