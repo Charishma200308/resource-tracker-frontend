@@ -24,28 +24,69 @@
   <br>
 
   <div style="display: flex; gap: 10px; align-items: left;justify-content: flex-start;margin-left: 20px;">
-  <button 
-    style="width: 150px; background-color: rgb(81, 99, 235); color: white;" 
-    (click)="toggleBulkEdit()">
-    {{ bulkEditMode ? 'Cancel Edit' : 'Edit Multiple' }}
-  </button>
+    <button style="width: 150px; background-color: rgb(81, 99, 235); color: white;" (click)="toggleBulkEdit()">
+      {{ bulkEditMode ? 'Cancel Edit' : 'Edit Multiple' }}
+    </button>
 
-  <button 
-    style="width: 200px; background-color: green; color: white;" 
-    [disabled]="selectedResourceIds.size <= 1"
-    (click)="navigateToBulkEdit()">
-    Continue with Edit
-  </button>
-  <button (click)="csvInput.click()"
+    <button style="width: 200px; background-color: green; color: white;" [disabled]="selectedResourceIds.size <= 1"
+      (click)="navigateToBulkEdit()">
+      Continue with Edit
+    </button>
+    <button (click)="csvInput.click()"
       style="margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; border: none; border-radius: 4px; cursor: pointer;margin-right: 20px;background-color: blue;border-radius: 20px;">
-        <mat-icon style="font-size: 20px;">download</mat-icon>
-        Import CSV
-      </button>
-      <input #csvInput type="file" accept=".csv" style="display: none" (change)="handleCSVUpload($event)" />
-</div>
+      <mat-icon style="font-size: 20px;">download</mat-icon>
+      Import CSV
+    </button>
+    <input #csvInput type="file" accept=".csv" style="display: none" (change)="handleCSVUpload($event)" />
+  </div>
 
-  <div class="home-background"> 
-    <table cellspacing="0" cellpadding="8">
+  <br>
+
+  <div class="home-background">
+    <kendo-grid
+  [data]="gridView"
+  [pageSize]="state.take"
+  [skip]="state.skip"
+  [sortable]="true"
+  [filterable]="true"
+  [pageable]="true"
+  [sort]="state.sort"
+  [filter]="state.filter"
+  (dataStateChange)="onStateChange($event)"
+  [navigable]="true"
+  [height]="350"
+  style="width: 90%;"
+>
+
+  <!-- Checkbox Column -->
+  <kendo-grid-column *ngIf="bulkEditMode" [width]="50">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <input
+        type="checkbox"
+        [value]="dataItem.empId"
+        (change)="onResourceSelect(dataItem.empId, $event)"
+      />
+    </ng-template>
+  </kendo-grid-column>
+
+  <!-- Regular Columns -->
+  <kendo-grid-column field="empId" title="Emp ID" [sortable]="true" [filterable]="true" [width]="100"></kendo-grid-column>
+  <kendo-grid-column field="name" title="Name" [sortable]="true" [filterable]="true" [width]="300"></kendo-grid-column>
+  <kendo-grid-column field="dsgntion" title="Designation" [sortable]="true" [filterable]="true" [width]="250"></kendo-grid-column>
+  <kendo-grid-column field="projalloc" title="Project Allocation" [sortable]="true" [filterable]="true" [width]="250"></kendo-grid-column>
+
+  <!-- Actions -->
+  <kendo-grid-column title="Actions" [width]="300">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button mat-button class="btn-view" (click)="Showhim(dataItem.empId)" style="margin-left: 20px;">More</button>
+      <button mat-button class="btn-edit" (click)="editDetaills(dataItem.empId)" style="margin-left: 20px;">Edit</button>
+      <mat-icon class="delete-icon" (click)="deleteFunction(dataItem.empId)" matTooltip="Delete" style="margin-left: 20px;">delete</mat-icon>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+
+
+    <!-- <table cellspacing="0" cellpadding="8">
       <thead>
         <tr>
           <th *ngIf="bulkEditMode"></th>
@@ -63,14 +104,8 @@
             </span>
           </th>
 
-          <!-- <th>Reporting To</th>
-      <th>Billable</th>
-      <th>Skills</th> -->
           <th>Project Allocation</th>
-          <!-- <th>Location</th>
-      <th>Email</th>
-      <th>Date of Joining</th>
-      <th>Remarks</th> -->
+
           <th>Actions</th>
         </tr>
       </thead>
@@ -82,22 +117,15 @@
           <td>{{ detail.empId }}</td>
           <td>{{ detail.name }}</td>
           <td>{{ detail.dsgntion }}</td>
-          <!-- <td>{{ detail.reporting }}</td>
-      <td>{{ detail.billable }}</td>
-      <td>{{ detail.skills }}</td> -->
+
           <td>{{ detail.projalloc }}</td>
-          <!-- <td>{{ detail.location }}</td>
-      <td>{{ detail.mail }}</td>
-      <td>{{ detail.doj }}</td>
-      <td>{{ detail.remarks }}</td> -->
+
           <td>
             <button mat-button class="btn-view" (click)="Showhim(detail.empId)"
               style="margin-right: 20px;margin-bottom: 10px;">More</button>
             <button mat-button class="btn-edit" (click)="editDetaills(detail.empId)"
               style="margin-right: 10px;">Edit</button>
-            <!-- <button mat-icon-button class="btn-delete" (click)="delete(detail.empid)" matTooltip="Delete">
-    <mat-icon>delete</mat-icon>
-  </button> -->
+
             <mat-icon class="delete-icon" (click)="deleteFunction(detail.empId)" matTooltip="Delete">delete</mat-icon>
           </td>
         </tr>
@@ -106,7 +134,7 @@
           <td colspan="5"></td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
     <div *ngIf="showDelete" class="modal-overlay">
       <div class="modal-box">
@@ -123,7 +151,7 @@
 
   <br>
 
-  <div class="pagination-bar">
+  <!-- <div class="pagination-bar">
     <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
       &#x25C0;
     </button>
@@ -135,8 +163,9 @@
     <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
       &#x25B6;
     </button>
-  </div>
+  </div> -->
 </div>
+<br>
 
 <footer class="footer">
   <div class="footer-section Left" style="margin-top: 5px;">

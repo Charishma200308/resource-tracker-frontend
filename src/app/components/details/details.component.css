@@ -67,7 +67,7 @@ button {
   color: white;
   padding: 8px 14px;
   font-size: 0.9rem;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   cursor: pointer;
   transition: background-color 0.25s ease;
 }
@@ -96,7 +96,7 @@ button {
   padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 30px;
+  border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 6px 15px rgba(30, 136, 229, 0.4);
   transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
@@ -361,4 +361,124 @@ body {
   height: 75px;
   vertical-align: middle;
 }
+
+.k-grid {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+.k-grid-header {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+.k-grid-header th {
+  border-bottom: 2px solid #556cd6; /* accent color */
+  color: #333;
+  padding: 8px 12px;
+}
+
+/* Rows */
+.k-grid-content tr:hover {
+  background-color: #e6e6ff;
+  cursor: pointer;
+}
+
+/* Cells */
+.k-grid-content td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Reduce row height */
+.k-grid tbody tr {
+  height: 10px;       /* set desired row height */
+  min-height: 10px;   /* enforce minimum */
+}
+
+/* Optional: reduce cell padding for tighter rows */
+.k-grid td {
+  padding: 4px 8px;  /* reduce padding inside cells */
+}
+
+/* For header row */
+.k-grid-header tr {
+  height: 10px;
+}
+
+.k-grid-header th {
+  padding: 4px 8px;
+}
+
+/* Force row height */
+.k-grid tbody tr {
+  height: 30px !important;
+  min-height: 30px !important;
+  line-height: 30px !important;
+}
+
+/* Reduce cell padding */
+.k-grid td {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  vertical-align: middle !important;
+}
+
+/* Also reduce height of header */
+.k-grid-header tr {
+  height: 30px !important;
+}
+
+.k-grid-header th {
+  padding: 4px 8px !important;
+  line-height: 30px !important;
+}
+
+/* Reduce button height if inside cells */
+.k-grid td button,
+.k-grid td .btn-view,
+.k-grid td .btn-edit,
+.k-grid td mat-icon {
+  height: 24px !important;
+  line-height: 24px !important;
+  padding: 0 6px !important;
+  font-size: 13px !important;
+  min-width: unset !important;
+}
+
+::ng-deep .k-grid .k-header.k-table-th {
+  background:  linear-gradient(90deg, #005f99, #007acc);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  height: 30px;
+}
+
+::ng-deep .k-grid {
+  border-radius: 10px;       /* Rounded corners */
+  overflow: hidden;          /* Clips inner corners for smooth radius */
+  border: 1px solid #ccc;    /* Optional border */
+}
+
+/* Fix height for all data rows */
+::ng-deep .k-grid .k-master-row {
+  height: 50px; /* Set your desired fixed height */
+  max-height: 50px;
+  line-height: 50px; /* Vertically centers text */
+}
+
+/* Optional: Fix height for the table cells */
+::ng-deep .k-grid .k-master-row .k-table-td {
+  height: 50px;
+  max-height: 50px;
+  vertical-align: middle;
+  padding-top: 0;   /* Adjust padding as needed */
+  padding-bottom: 0;
+}
+
 

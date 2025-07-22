@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Details } from '../../../interfaces/interface';
 import { MyServiceService } from '../../my-service.service';
 import { Route, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { KENDO_GRID } from "@progress/kendo-angular-grid";
+import { GridComponent, KENDO_GRID } from "@progress/kendo-angular-grid";
 import { MatIconModule } from '@angular/material/icon';
+import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
+import { process, State } from '@progress/kendo-data-query';
+
 
 @Component({
 
@@ -31,54 +34,85 @@ export class DetailsComponent {
     this.myService.GetAllEmployees().subscribe((data: any) => {
       const EmployeeData = data?.employees;
       this.details = Array.isArray(EmployeeData) ? EmployeeData : [EmployeeData];
-    });
+      this.loadGridData();
+    }); 
   }
 
+  public gridView!: GridDataResult;
 
-  sortColumn: string = '';
-  sortDirection: 'asc' | 'desc' = 'asc';
+public state: State = {
+  skip: 0,
+  take: 3,
+  sort: [],
+  
+  filter: undefined
+};
 
-  sortData(column: string) {
-    if (this.sortColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
-    }
+
+pageSize = 3;
+skip = 0;
+
+onPageChange(event: any): void {
+  this.skip = event.skip;
+  this.pageSize = event.take;
+  this.state.skip = this.skip;       // Update state.skip as well
+  this.state.take = this.pageSize;   // Update state.take
+  this.loadGridData();                // Refresh the grid data view
+}
+
+
+onStateChange(state: DataStateChangeEvent): void {
+  this.state = state;
+  this.loadGridData();
+}
+  loadGridData(): void {
+    this.gridView = process(this.details, this.state);
   }
 
-  currentPage: number = 1;
-  inputPage: number = 1;
-  itemsPerPage: number = 3;
+  // sortColumn: string = '';
+  // sortDirection: 'asc' | 'desc' = 'asc';
 
-  get totalPages(): number {
-    return Math.ceil(this.details.length / this.itemsPerPage);
-  }
+  // sortData(column: string) {
+  //   if (this.sortColumn === column) {
+  //     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  //   } else {
+  //     this.sortColumn = column;
+  //     this.sortDirection = 'asc';
+  //   }
+  // }
 
-  get pagedDetails() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    let pageData = this.details.slice(start, end);
+  // currentPage: number = 1;
+  // inputPage: number = 1;
+  // itemsPerPage: number = 3;
 
-    if (this.sortColumn) {
-      pageData = pageData.sort((a: any, b: any) => {
-        const valA = a[this.sortColumn]?.toLowerCase?.() || '';
-        const valB = b[this.sortColumn]?.toLowerCase?.() || '';
-        if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
-        if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
-        return 0;
-      });
-    }
+  // get totalPages(): number {
+  //   return Math.ceil(this.details.length / this.itemsPerPage);
+  // }
 
-    return pageData;
-  }
+  // get pagedDetails() {
+  //   const start = (this.currentPage - 1) * this.itemsPerPage;
+  //   const end = start + this.itemsPerPage;
+  //   let pageData = this.details.slice(start, end);
 
-  goToPage(page: number) {
-    if (page < 1) page = 1;
-    if (page > this.totalPages) page = this.totalPages;
-    this.currentPage = page;
-    this.inputPage = page;
-  }
+  //   if (this.sortColumn) {
+  //     pageData = pageData.sort((a: any, b: any) => {
+  //       const valA = a[this.sortColumn]?.toLowerCase?.() || '';
+  //       const valB = b[this.sortColumn]?.toLowerCase?.() || '';
+  //       if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+  //       if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+  //       return 0;
+  //     });
+  //   }
+
+  //   return pageData;
+  // }
+
+  // goToPage(page: number) {
+  //   if (page < 1) page = 1;
+  //   if (page > this.totalPages) page = this.totalPages;
+  //   this.currentPage = page;
+  //   this.inputPage = page;
+  // }
 
   Showhim(empId: number) {
     this.router.navigate([`/Details/${empId}`]);
@@ -113,10 +147,10 @@ export class DetailsComponent {
     this.router.navigate([`/Edit/${empId}`]);
   }
 
-  createEmptyRows(): any[] {
-    const count = this.itemsPerPage - this.pagedDetails.length;
-    return Array(count).fill({});
-  }
+  // createEmptyRows(): any[] {
+  //   const count = this.itemsPerPage - this.pagedDetails.length;
+  //   return Array(count).fill({});
+  // }
 
   bulkEditMode: boolean = false;
   selectedResourceIds: Set<number> = new Set();
@@ -147,8 +181,7 @@ export class DetailsComponent {
     }
   }
 
-
-
+  
   handleCSVUpload(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
