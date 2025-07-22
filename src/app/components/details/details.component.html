@@ -44,7 +44,7 @@
 
   <div class="home-background">
     <kendo-grid
-  [data]="gridView"
+  [kendoGridBinding]="details"
   [pageSize]="state.take"
   [skip]="state.skip"
   [sortable]="true"
@@ -56,6 +56,7 @@
   [navigable]="true"
   [height]="350"
   style="width: 75%;"
+  [loading]="loading"
 >
 
   <!-- Checkbox Column -->

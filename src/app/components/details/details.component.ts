@@ -31,40 +31,45 @@ export class DetailsComponent {
   }
 
   fetchEmployees() {
+    this.loading = true;
     this.myService.GetAllEmployees().subscribe((data: any) => {
       const EmployeeData = data?.employees;
       this.details = Array.isArray(EmployeeData) ? EmployeeData : [EmployeeData];
+      this.loading = false;
       this.loadGridData();
-    }); 
+    });
   }
 
   public gridView!: GridDataResult;
 
-public state: State = {
-  skip: 0,
-  take: 3,
-  sort: [],
+  state: any = {
+    skip: 0,
+    take: 3,
+    sort: [],
+
+    filter: undefined
+  };
+
+  loading: boolean = false;
+
+
+  pageSize = 3;
+  skip = 0;
+
+  onPageChange(event: any): void {
+    this.skip = event.skip;
+    this.pageSize = event.take;
+    this.state.skip = this.skip;       // Update state.skip as well
+    this.state.take = this.pageSize;   // Update state.take
+    this.loadGridData();                // Refresh the grid data view
+  }
+
+
+  onStateChange(state: DataStateChangeEvent): void {
+    this.state = state;
+    this.loadGridData();
+  }
   
-  filter: undefined
-};
-
-
-pageSize = 3;
-skip = 0;
-
-onPageChange(event: any): void {
-  this.skip = event.skip;
-  this.pageSize = event.take;
-  this.state.skip = this.skip;       // Update state.skip as well
-  this.state.take = this.pageSize;   // Update state.take
-  this.loadGridData();                // Refresh the grid data view
-}
-
-
-onStateChange(state: DataStateChangeEvent): void {
-  this.state = state;
-  this.loadGridData();
-}
   loadGridData(): void {
     this.gridView = process(this.details, this.state);
   }
@@ -119,15 +124,11 @@ onStateChange(state: DataStateChangeEvent): void {
   }
 
   delete(empId: number) {
-    this.myService.DeleteEmployee(empId).subscribe(() => {
-
-      this.myService.GetAllEmployees().subscribe((data: any) => {
-        console.log('API response:', data);
-        let EmployeeData = data?.employees;
-        this.details = Array.isArray(EmployeeData) ? EmployeeData : [EmployeeData];
-      });
+    this.myService.DeleteEmployee(empId).subscribe((response: any) => {
+      console.log('Employee deleted successfully:', response);
+      this.fetchEmployees(); // Refresh the employee list after deletion
     });
-
+    
     this.closeDelete();
   }
 
@@ -181,7 +182,7 @@ onStateChange(state: DataStateChangeEvent): void {
     }
   }
 
-  
+
   handleCSVUpload(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
