@@ -1,0 +1,35 @@
+<div class="signup-container">
+  <h2>Sign Up</h2>
+  <form (ngSubmit)="onSignup()" #signupForm="ngForm">
+    <div>
+      <label for="username">Username</label>
+      <input type="text" id="username" required [(ngModel)]="username" name="username" #usernameRef="ngModel" />
+      <div *ngIf="usernameRef.invalid && usernameRef.touched" class="error-msg">Username is required.</div>
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" required [(ngModel)]="email" name="email" #emailRef="ngModel" />
+      <div *ngIf="emailRef.invalid && emailRef.touched" class="error-msg">Valid email is required.</div>
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" required [(ngModel)]="password" name="password" #passwordRef="ngModel" />
+      <div *ngIf="passwordRef.invalid && passwordRef.touched" class="error-msg">Password is required.</div>
+    </div>
+
+    <div>
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" required [(ngModel)]="confirmPassword" name="confirmPassword" #confirmPasswordRef="ngModel" />
+      <div *ngIf="confirmPasswordRef.invalid && confirmPasswordRef.touched" class="error-msg">Please confirm your password.</div>
+      <div *ngIf="password !== confirmPassword && confirmPasswordRef.touched" class="error-msg">Passwords do not match.</div>
+    </div>
+
+    <button type="submit" [disabled]="password !== confirmPassword || signupForm.invalid">Sign Up</button>
+  </form>
+  <p class="already-account">
+    Already have an account? 
+    <a href="/login">Login here</a>
+  </p>
+</div>

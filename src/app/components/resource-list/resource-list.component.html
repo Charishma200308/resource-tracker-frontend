@@ -5,7 +5,10 @@
   
   <div class="right-button">
     <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.8px;">
-      
+
+      <button style="display: flex;gap: 6px;align-items: center;" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      Logout</button>
 
       <button (click)="exportToCSV()"
         style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px;border: none; border-radius: 4px; cursor: pointer;">
@@ -22,7 +25,7 @@
   </div>
 </div>
 
-<div class="modal" *ngIf="showModal">
+<!-- <div class="modal" *ngIf="showModal">
   <div class="modal-content">
     <h2>
       <mat-icon color="accent" style="vertical-align: middle; margin-right: 8px;">track_changes</mat-icon>
@@ -55,7 +58,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Main content -->
 <router-outlet></router-outlet>

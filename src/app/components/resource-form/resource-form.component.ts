@@ -69,6 +69,7 @@ export class ResourceFormComponent {
       this.http.GetEmployee(this.empId).subscribe((data: any) => {
         console.log(data);
         data.skills = data.skills?.split(',').map((s: string) => s.trim()) || [];
+        data.projalloc = data.projalloc?.split(',').map((p: string) => p.trim()) || [];
         this.userform.patchValue(data);
         this.originalFormData = { ...data };
       });

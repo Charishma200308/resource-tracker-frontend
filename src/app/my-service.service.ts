@@ -10,6 +10,7 @@ import { Environment } from '../environments/environment';
 export class MyServiceService {
 
   private myUrl: string = Environment.URI;
+  private authUrl: string = Environment.URL;
 
   constructor(private http: HttpClient) { }
 
@@ -85,5 +86,25 @@ export class MyServiceService {
   const endpoint = this.myUrl + id;
   return this.http.get(endpoint);
 }
+
+register(data: { username: string; email: string; password: string }): Observable<any> {
+    return this.http.post(this.authUrl + 'register', data);
+  }
+
+login(credentials: { email: string, password: string }): Observable<any> {
+    return this.http.post( this.authUrl+ 'login', credentials);
+  }
+
+  storeToken(token: string) {
+    localStorage.setItem('jwt_token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('jwt_token');
+  }
+
+  logout() {
+    localStorage.removeItem('jwt_token');
+  }
 
 }

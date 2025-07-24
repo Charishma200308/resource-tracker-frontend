@@ -93,12 +93,10 @@ constructor(private http: MyServiceService, private router: Router, private rout
 
   const formValues = this.bulkEditForm.value;
 
-  // Collect only non-empty fields
   const fieldsToUpdate: any = {};
   for (const key in formValues) {
     const value = formValues[key];
     if (value !== null && value !== '' && !(Array.isArray(value) && value.length === 0)) {
-      // Convert arrays to comma-separated strings (for skills and projalloc)
       fieldsToUpdate[key] = Array.isArray(value) ? value.join(',') : value;
     }
   }
@@ -113,7 +111,6 @@ constructor(private http: MyServiceService, private router: Router, private rout
     return;
   }
 
-  // Build payload with updated values
   const payload = this.selectedEmployees.map(emp => {
     const updatedEmp = { ...emp };
 
@@ -132,7 +129,7 @@ constructor(private http: MyServiceService, private router: Router, private rout
       this.bulkEditMode = false;
       this.selectedResourceIds.clear();
 
-      setTimeout(() => this.router.navigate(['/']), 500);
+      setTimeout(() => this.router.navigate(['/Home']), 500);
     },
     error: (err) => {
       console.error('Bulk update failed:', err);
@@ -150,8 +147,8 @@ ngOnInit(): void {
       if (params['ids']) {
         const ids = params['ids'].split(',').map((id: string) => +id);
         this.selectedResourceIds = new Set(ids);
-        this.bulkEditMode = true;  // show form
-        this.fetchSelectedEmployees(ids); // fetch employee data by ids
+        this.bulkEditMode = true;  
+        this.fetchSelectedEmployees(ids); 
       } else {
         alert('No employees selected for bulk edit.');
         this.router.navigate(['/']);

@@ -17,39 +17,39 @@ import { MyServiceService } from '../../my-service.service';
 
 export class ResourceListComponent {
 
-  constructor(private http: MyServiceService) { }
+  constructor(private http: MyServiceService,private router:Router) { }
 
   ngOnInit() {
-    const dismissed = localStorage.getItem('dismissed');
-    const firstTime = sessionStorage.getItem('firstTime');
-
-    if (dismissed) {
-      this.showModal = false;
-    } else if (firstTime) {
-      this.showModal = false;
-    } else {
-      this.showModal = true;
-      sessionStorage.setItem('firstTime', 'false');
-    }
-
-    this.fetchEmployeeData();
+    // const showWelcome = sessionStorage.getItem('showWelcomeModal');
+    // console.log('showWelcome:', showWelcome);
     
+    // if (showWelcome === 'true') {
+    //   this.showModal = true;
+    // } else {
+    //   this.showModal = false;
+    // }
+    this.fetchEmployeeData();
   }
 
-  showModal = true;
+  // showModal = true;
 
-  remindMeNextTime() {
-    this.showModal = false;
-  }
+  // dismissForever() {
+  //   this.showModal = false;
+  //   sessionStorage.setItem('showWelcomeModal', 'false');
+  // }
 
-  dismissForever() {
-    localStorage.setItem('dismissed', 'true');
-    this.showModal = false;
-  }
+  // remindMeNextTime() {
+  //   this.showModal = false;
+  // }
 
-  closeModal() {
-    this.showModal = false;
-  }
+  // closeModal() {
+  //   this.showModal = false;
+  // }
+
+  logout() {
+  localStorage.removeItem('token'); // or sessionStorage.clear()
+  this.router.navigate(['/login']); // redirect to login route
+}
 
   details: Details[] = []
 
@@ -93,7 +93,7 @@ export class ResourceListComponent {
         item.mail,
         item.doj,
         item.remarks
-      ].map(field => `"${String(field).replace(/"/g, '""')}"`); 
+      ].map(field => `"${String(field).replace(/"/g, '""')}"`);
       csvRows.push(row.join(','));
     });
 
@@ -109,7 +109,7 @@ export class ResourceListComponent {
     document.body.removeChild(link);
   }
 
-  
+
 
 
 

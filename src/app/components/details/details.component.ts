@@ -9,13 +9,14 @@ import { GridComponent, KENDO_GRID } from "@progress/kendo-angular-grid";
 import { MatIconModule } from '@angular/material/icon';
 import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
 import { process, State } from '@progress/kendo-data-query';
+import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component';
 
 
 @Component({
 
   selector: 'app-details',
   standalone: true,
-  imports: [FormsModule, CommonModule, KENDO_GRID, MatIconModule],
+  imports: [FormsModule, CommonModule, KENDO_GRID, MatIconModule, WelcomeModalComponent],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
@@ -171,7 +172,6 @@ export class DetailsComponent {
     const idsArray = Array.from(this.selectedResourceIds);
     this.router.navigate(['/bulk-edit'], { queryParams: { ids: idsArray.join(',') } });
   }
-
 
 
   onResourceSelect(id: number, event: any) {

@@ -1,0 +1,34 @@
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content">
+    <h2>
+      <mat-icon color="accent" style="vertical-align: middle; margin-right: 8px;">track_changes</mat-icon>
+      Welcome to Resource Tracker Application
+    </h2>
+
+    <div class="section">
+      <div class="section-header">
+        <mat-icon class="section-icon" color="primary">home</mat-icon>
+        <h3>Home</h3>
+        <button routerLink="/Home" (click)="closeModal()">Go to Home</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <mat-icon class="section-icon" color="primary">support_agent</mat-icon>
+        <h3>Helpdesk</h3>
+        <button routerLink="/help-desk" (click)="closeModal()">Go to Helpdesk</button>
+      </div>
+    </div>
+
+    <div class="closebuttons">
+      <div class="remind-button-wrapper">
+        <button (click)="remindMeNextTime()">Remind Me Next Time</button>
+      </div>
+
+      <div class="dimiss">
+        <button (click)="dismissForever()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
