@@ -52,6 +52,7 @@
     "@progress/kendo-theme-default": "11.0.2",
     "@progress/kendo-ui": "^2025.2.520",
     "jspdf": "^3.0.1",
+    "jwt-decode": "^4.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

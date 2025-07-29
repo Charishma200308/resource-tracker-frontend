@@ -24,10 +24,17 @@ import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component'
 export class DetailsComponent {
 
   details: Details[] = []
+  username: string = '' ;
 
   constructor(private myService: MyServiceService, private router: Router, private route1: ActivatedRoute) { }
 
   ngOnInit() {
+    this.myService.username$.subscribe(name => {
+      this.username = name || '';
+    });
+
+    this.myService.setUsername();
+
     this.fetchEmployees();
   }
 
@@ -257,7 +264,7 @@ export class DetailsComponent {
             detail.billable = value;
             break;
           case 'skills':
-            detail.skills = value; // You can split it here if needed
+            detail.skills = value; 
             break;
           case 'project allocation':
           case 'projalloc':

@@ -1,7 +1,7 @@
 import { CommonModule, formatCurrency } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Details } from '../../../interfaces/interface';
 import { MyServiceService } from '../../my-service.service';
@@ -17,38 +17,32 @@ import { MyServiceService } from '../../my-service.service';
 
 export class ResourceListComponent {
 
-  constructor(private http: MyServiceService,private router:Router) { }
+  constructor(private http: MyServiceService,private router:Router) {
+     this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = event.urlAfterRedirects;
+        this.showNavbar = !['/login', '/signup'].includes(currentRoute);
+      }
+    });
+   }
 
+  username: string = '' ;
+  
   ngOnInit() {
-    // const showWelcome = sessionStorage.getItem('showWelcomeModal');
-    // console.log('showWelcome:', showWelcome);
-    
-    // if (showWelcome === 'true') {
-    //   this.showModal = true;
-    // } else {
-    //   this.showModal = false;
-    // }
+    this.http.username$.subscribe(name => {
+      this.username = name || '';
+    });
+
+    this.http.setUsername();
+
     this.fetchEmployeeData();
   }
 
-  // showModal = true;
-
-  // dismissForever() {
-  //   this.showModal = false;
-  //   sessionStorage.setItem('showWelcomeModal', 'false');
-  // }
-
-  // remindMeNextTime() {
-  //   this.showModal = false;
-  // }
-
-  // closeModal() {
-  //   this.showModal = false;
-  // }
+  showNavbar: boolean = true;
 
   logout() {
-  localStorage.removeItem('token'); // or sessionStorage.clear()
-  this.router.navigate(['/login']); // redirect to login route
+  localStorage.removeItem('token'); 
+  this.router.navigate(['/login']); 
 }
 
   details: Details[] = []
@@ -108,10 +102,5 @@ export class ResourceListComponent {
     link.click();
     document.body.removeChild(link);
   }
-
-
-
-
-
 
 }

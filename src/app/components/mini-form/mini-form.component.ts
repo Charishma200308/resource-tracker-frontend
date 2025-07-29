@@ -121,7 +121,6 @@ constructor(private http: MyServiceService, private router: Router, private rout
     return updatedEmp;
   });
 
-  // Send to backend
   this.http.BulkUpdateEmployees(payload).subscribe({
     next: () => {
       alert('Bulk update successful!');

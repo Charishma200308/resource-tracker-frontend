@@ -20,6 +20,7 @@ export class SignupComponent {
   constructor(private authService: MyServiceService, private router: Router) {}
 
   onSignup() {
+
     if (this.password !== this.confirmPassword) {
       alert('Passwords do not match!');
       return;

@@ -14,8 +14,10 @@ export class LoginComponent {
   password = '';
   email = '';
   rememberMe = false;
+  username: string = '';
 
-  constructor(private router: Router, private authService: MyServiceService) {}
+  constructor(private router: Router, private authService: MyServiceService) {
+  }
 
   onLogin() {
     const credentials = { email: this.email, password: this.password };
@@ -23,6 +25,7 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (res: any) => {
         this.authService.storeToken(res.token);
+        this.authService.setUsername();
         localStorage.setItem('isLoggedIn', 'true');
         sessionStorage.setItem('showWelcomeModal', 'true');
         this.router.navigate(['/Home']);
@@ -32,4 +35,5 @@ export class LoginComponent {
       }
     });
   }
+
 }

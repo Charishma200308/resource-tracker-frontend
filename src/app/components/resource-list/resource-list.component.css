@@ -203,6 +203,8 @@ button:hover {
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.6);
 }
 
+
+
 form.row {
   display: flex;
   flex-wrap: wrap;
@@ -396,4 +398,12 @@ router-outlet {
 
 .footer-section.Right {
   justify-content: flex-end;
+}
+
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #e0e0e0; /* Light gray background */
+  color: #f7f4f4; /* Gray text */
+  border: 1px solid #ccc;
 }
