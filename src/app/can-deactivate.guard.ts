@@ -12,7 +12,7 @@ export const formCanActivateGuard: CanActivateFn = () => {
 
   const user = authService.getUsername();
 
-  if (user === 'Admin') {
+  if (user === 'Admin' || 'Manager') {
     return true;
   } else {
     router.navigate(['/unauthorized']);
