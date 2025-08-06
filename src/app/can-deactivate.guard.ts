@@ -20,6 +20,20 @@ export const formCanActivateGuard: CanActivateFn = () => {
   }
   };
 
+  export const editCanActivateGuard: CanActivateFn = () => {
+  const authService = inject(MyServiceService);
+  const router = inject(Router);
+
+  const user = authService.getUsername();
+
+  if (user === 'Admin' || user === 'Manager') {
+    return true;
+  } else {
+    router.navigate(['/unauthorized']);
+    return false;
+  }
+};
+
 
 export const canDeactivateGuard: CanDeactivateFn<CanComponentDeactivate> = (
   component
