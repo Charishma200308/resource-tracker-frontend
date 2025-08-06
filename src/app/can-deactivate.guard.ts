@@ -12,13 +12,13 @@ export const formCanActivateGuard: CanActivateFn = () => {
 
   const user = authService.getUsername();
 
-  if (user === 'Admin' || 'Manager') {
+  if (user === 'Admin' || user === 'Manager') {
     return true;
   } else {
     router.navigate(['/unauthorized']);
     return false;
   }
-};
+  };
 
 
 export const canDeactivateGuard: CanDeactivateFn<CanComponentDeactivate> = (

@@ -25,8 +25,6 @@ import { MatOptionModule } from '@angular/material/core';
 export class ResourceFormComponent {
   constructor(private http: MyServiceService, private router: Router, private route: ActivatedRoute) { }
 
-  
-
   empId!: number
   details: any = []
   editMode: boolean = false;
