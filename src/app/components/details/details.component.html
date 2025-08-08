@@ -45,6 +45,9 @@
         Import CSV
       </button>
       <input #csvInput type="file" accept=".csv" style="display: none" (change)="handleCSVUpload($event)" />
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
     </ng-container>
 
   </div>

@@ -24,7 +24,7 @@ import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component'
 export class DetailsComponent {
 
   details: Details[] = []
-  username: string = '' ;
+  username: string = '';
 
   constructor(private myService: MyServiceService, private router: Router, private route1: ActivatedRoute) { }
 
@@ -77,7 +77,7 @@ export class DetailsComponent {
     this.state = state;
     this.loadGridData();
   }
-  
+
   loadGridData(): void {
     this.gridView = process(this.details, this.state);
   }
@@ -136,7 +136,7 @@ export class DetailsComponent {
       console.log('Employee deleted successfully:', response);
       this.fetchEmployees(); // Refresh the employee list after deletion
     });
-    
+
     this.closeDelete();
   }
 
@@ -231,6 +231,8 @@ export class DetailsComponent {
     return result;
   }
 
+  errorMessage: string = '';
+
   parseAndSaveCSV(csvText: string): void {
     const lines = csvText.trim().split('\n');
     const headers = this.parseCSVLine(lines[0]);
@@ -238,6 +240,8 @@ export class DetailsComponent {
     const newDetails: Details[] = [];
     const existingMaxId = this.details.reduce((max, item) => Math.max(max, Number(item.empId) || 0), 0);
     let saveCount = 0;
+
+    this.errorMessage = '';
 
     for (let i = 1; i < lines.length; i++) {
       const values = this.parseCSVLine(lines[i]);
@@ -264,7 +268,7 @@ export class DetailsComponent {
             detail.billable = value;
             break;
           case 'skills':
-            detail.skills = value; 
+            detail.skills = value;
             break;
           case 'project allocation':
           case 'projalloc':
@@ -294,11 +298,12 @@ export class DetailsComponent {
         next: () => {
           saveCount++;
           if (saveCount === lines.length - 1) {
-            this.fetchEmployees(); // refresh UI
+            this.fetchEmployees();
             alert(`${saveCount} records imported and saved successfully.`);
           }
         },
         error: (err) => {
+          alert(`Failed to save employee at line ${i + 1}. Please try again.`);
           console.error(`Failed to save employee at line ${i + 1}`, err);
         }
       });
