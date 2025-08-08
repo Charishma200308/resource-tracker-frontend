@@ -28,12 +28,12 @@
     <!-- Show only if user is NOT Employee -->
     <ng-container *ngIf="username !== 'Employee'">
       <button style="width: 150px; background-color: rgb(81, 99, 235); color: white;" (click)="toggleBulkEdit()">
-        {{ bulkEditMode ? 'Cancel Edit' : 'Edit Multiple' }}
+        {{ bulkEditMode ? 'Cancel Edit' : 'Select Multiple' }}
       </button>
 
       <button style="width: 200px; background-color: green; color: white;" [disabled]="selectedResourceIds.size <= 1"
         (click)="navigateToBulkEdit()">
-        Continue with Edit
+        Continue Bulk Edit
       </button>
     </ng-container>
 
