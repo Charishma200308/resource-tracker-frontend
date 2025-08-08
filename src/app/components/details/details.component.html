@@ -23,27 +23,32 @@
   </div>
   <br>
 
-  <div style="display: flex; gap: 10px; align-items: left;justify-content: flex-start;margin-left: 20px;">
-    <button [disabled]="username == 'Employee'"
-      [ngStyle]="username == 'Employee' ? {'cursor': 'not-allowed', 'opacity': '0.5'} : {'cursor': 'pointer'}"
-      style="width: 150px; background-color: rgb(81, 99, 235); color: white;" (click)="toggleBulkEdit()">
-      {{ bulkEditMode ? 'Cancel Edit' : 'Edit Multiple' }}
-    </button>
+  <div style="display: flex; gap: 10px; align-items: left; justify-content: flex-start; margin-left: 20px;">
 
-    <button [disabled]="username == 'Employee'"
-      [ngStyle]="username == 'Employee' ? {'cursor': 'not-allowed', 'opacity': '0.5'} : {'cursor': 'pointer'}"
-      style="width: 200px; background-color: green; color: white;" [disabled]="selectedResourceIds.size <= 1"
-      (click)="navigateToBulkEdit()">
-      Continue with Edit
-    </button>
-    <button (click)="csvInput.click()" [disabled]="username != 'Admin'"
-      [ngStyle]="username != 'Admin' ? {'cursor': 'not-allowed', 'opacity': '0.5'} : {'cursor': 'pointer'}"
-      style="margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; border: none; border-radius: 4px; cursor: pointer;margin-right: 20px;background-color: blue;border-radius: 20px;">
-      <mat-icon style="font-size: 20px;">download</mat-icon>
-      Import CSV
-    </button>
-    <input #csvInput type="file" accept=".csv" style="display: none" (change)="handleCSVUpload($event)" />
+    <!-- Show only if user is NOT Employee -->
+    <ng-container *ngIf="username !== 'Employee'">
+      <button style="width: 150px; background-color: rgb(81, 99, 235); color: white;" (click)="toggleBulkEdit()">
+        {{ bulkEditMode ? 'Cancel Edit' : 'Edit Multiple' }}
+      </button>
+
+      <button style="width: 200px; background-color: green; color: white;" [disabled]="selectedResourceIds.size <= 1"
+        (click)="navigateToBulkEdit()">
+        Continue with Edit
+      </button>
+    </ng-container>
+
+    <!-- Show only if user is Admin -->
+    <ng-container *ngIf="username !== 'Employee'">
+      <button (click)="csvInput.click()"
+        style="margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; border: none; border-radius: 20px; background-color: blue; color: white; margin-right: 20px;">
+        <mat-icon style="font-size: 20px;">download</mat-icon>
+        Import CSV
+      </button>
+      <input #csvInput type="file" accept=".csv" style="display: none" (change)="handleCSVUpload($event)" />
+    </ng-container>
+
   </div>
+
 
   <br>
 
@@ -70,20 +75,21 @@
       <kendo-grid-column field="projalloc" title="Project Allocation" [sortable]="true" [filterable]="true"
         [width]="200"></kendo-grid-column>
 
-      <!-- Actions -->
-      <kendo-grid-column title="Actions" [width]="300">
+      <kendo-grid-column title="Actions" [resizable]="true" [autoSize]="true">
         <ng-template kendoGridCellTemplate let-dataItem>
           <button mat-button class="btn-view" (click)="Showhim(dataItem.empId)" style="margin-left: 20px;">More</button>
-          <button mat-button [disabled]="username == 'Employee'"
-            [ngStyle]="username == 'Employee' ? {'cursor': 'not-allowed', 'opacity': '0.5'} : {'cursor': 'pointer'}"
-            class="btn-edit" (click)="editDetaills(dataItem.empId)" style="margin-left: 20px;">Edit</button>
-          <mat-icon [ngStyle]="username === 'Employee' 
-    ? { 'cursor': 'not-allowed', 'opacity': '0.5', 'pointer-events': 'none' } 
-    : { 'cursor': 'pointer' }" class="delete-icon" (click)="username !== 'Employee' && deleteFunction(dataItem.empId)"
-            matTooltip="Delete" style="margin-left: 20px;">
+
+          <button mat-button class="btn-edit" (click)="editDetaills(dataItem.empId)"
+            [ngStyle]="username === 'Employee' ? {'visibility': 'hidden'} : {}" style="margin-left: 20px;">
+            Edit
+          </button>
+
+          <mat-icon class="delete-icon" (click)="deleteFunction(dataItem.empId)" matTooltip="Delete"
+            [ngStyle]="username === 'Employee' ? {'visibility': 'hidden'} : {}" style="margin-left: 20px;">
             delete
           </mat-icon>
         </ng-template>
+
       </kendo-grid-column>
     </kendo-grid>
 

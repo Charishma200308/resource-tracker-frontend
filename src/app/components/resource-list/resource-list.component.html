@@ -16,8 +16,7 @@
         <span>Export CSV</span>
       </button>
 
-      <button routerLink="/Form" [disabled]="username != 'Admin'"
-        [ngStyle]="username != 'Admin' ? {'cursor': 'not-allowed', 'opacity': '0.5'} : {'cursor': 'pointer'}"
+      <button *ngIf="username === 'Admin'" routerLink="/Form"
         style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px;border: none; border-radius: 4px; cursor: pointer;">
         <mat-icon style="font-size: 20px;">assignment</mat-icon>
         <span>Add New Form</span>

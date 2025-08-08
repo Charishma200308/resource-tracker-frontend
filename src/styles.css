@@ -41,3 +41,6 @@ div.mat-mdc-form-field-infix {
     margin: 0;
 }
 
+::ng-deep .k-grid-table {
+  table-layout: auto !important;
+}
