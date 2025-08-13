@@ -21,6 +21,12 @@
         <mat-icon style="font-size: 20px;">assignment</mat-icon>
         <span>Add New Form</span>
       </button>
+
+      <button *ngIf="username === 'Admin'" routerLink="/admin"
+        style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; border: none; border-radius: 4px; cursor: pointer;">
+        <mat-icon style="font-size: 20px;">admin_panel_settings</mat-icon>
+        <span>Admin Panel</span>
+      </button>
     </div>
   </div>
 </div>

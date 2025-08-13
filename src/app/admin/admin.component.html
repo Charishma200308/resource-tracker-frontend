@@ -1,0 +1,70 @@
+<div class="admin-wrapper">
+
+    <aside class="sidebar">
+        <div class="sidebar-header" style="background-color: #297cf0;height: 36px;">
+            <span class="icon-circle">
+                <mat-icon>person</mat-icon>
+            </span>
+            <h3 style="margin-top: 15px;">Admin</h3>
+        </div>
+
+        <nav class="sidebar-menu">
+            <ul>
+                <li routerLinkActive="active">
+                    <mat-icon>home</mat-icon>
+                    <a routerLink="/admin/dashboard">Dashboard</a>
+                </li>
+
+                <li>
+                    <mat-icon>settings</mat-icon>
+                    <a (click)="toggleWebsiteSettings()" class="has-submenu">
+                        Website Setting
+                        <span [class.open]="websiteSettingsOpen">▸</span>
+                    </a>
+                    <ul *ngIf="websiteSettingsOpen" class="submenu">
+                        <li routerLinkActive="active"><a routerLink="/admin/website-menu">Website Menu</a></li>
+                        <li routerLinkActive="active"><a routerLink="/admin/website-setting">Website Setting</a></li>
+                        <li routerLinkActive="active"><a routerLink="/admin/theme-setting">Theme Setting</a></li>
+                    </ul>
+                </li>
+
+                <li routerLinkActive="active">
+                    <mat-icon>mail</mat-icon>
+                    <a routerLink="/admin/help-desk">Contact Us</a>
+                </li>
+
+                <li routerLinkActive="active">
+                    <mat-icon>description</mat-icon>
+                    <a routerLink="/admin/website-content">Website Content</a>
+                </li>
+
+                <li routerLinkActive="active">
+                    <mat-icon>supervisor_account</mat-icon>
+                    <a routerLink="/admin/website-admin">Website Admin</a>
+                </li>
+
+                <li>
+                    <button (click)="goBack()" class="back-button" style="height: 40px;width: 40px;">
+                        <mat-icon style="margin-left: 3px;font-size: 25px;">arrow_back</mat-icon>
+                    </button>
+                </li>
+            </ul>
+
+        </nav>
+    </aside>
+
+    <div class="main-content">
+        <header class="topbar">
+            <h2 style="margin-top: 12px;margin-left: 70px;">Admin Panel</h2>
+            <div class="topbar-icons">
+                <button>
+                    <mat-icon>settings</mat-icon>
+                </button>
+                <button (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </div>
+        </header>
+
+    </div>
+</div>

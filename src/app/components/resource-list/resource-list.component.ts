@@ -17,17 +17,21 @@ import { MyServiceService } from '../../my-service.service';
 
 export class ResourceListComponent {
 
-  constructor(private http: MyServiceService,private router:Router) {
-     this.router.events.subscribe(event => {
+  constructor(private http: MyServiceService, private router: Router) {
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentRoute = event.urlAfterRedirects;
-        this.showNavbar = !['/login', '/signup'].includes(currentRoute);
+        this.showNavbar = !(
+          currentRoute.startsWith('/login') ||
+          currentRoute.startsWith('/signup') ||
+          currentRoute.startsWith('/admin')
+        );
       }
     });
-   }
+  }
 
-  username: string = '' ;
-  
+  username: string = '';
+
   ngOnInit() {
     this.http.username$.subscribe(name => {
       this.username = name || '';
@@ -41,9 +45,9 @@ export class ResourceListComponent {
   showNavbar: boolean = true;
 
   logout() {
-  localStorage.removeItem('token'); 
-  this.router.navigate(['/login']); 
-}
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 
   details: Details[] = []
 

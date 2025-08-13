@@ -25,7 +25,6 @@
 
   <div style="display: flex; gap: 10px; align-items: left; justify-content: flex-start; margin-left: 20px;">
 
-    <!-- Show only if user is NOT Employee -->
     <ng-container *ngIf="username !== 'Employee'">
       <button style="width: 150px; background-color: rgb(81, 99, 235); color: white;" (click)="toggleBulkEdit()">
         {{ bulkEditMode ? 'Cancel Edit' : 'Select Multiple' }}
@@ -37,7 +36,6 @@
       </button>
     </ng-container>
 
-    <!-- Show only if user is Admin -->
     <ng-container *ngIf="username !== 'Employee'">
       <button (click)="csvInput.click()"
         style="margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 14px; border: none; border-radius: 20px; background-color: blue; color: white; margin-right: 20px;">
@@ -52,7 +50,6 @@
 
   </div>
 
-
   <br>
 
   <div class="home-background">
@@ -61,14 +58,12 @@
       (dataStateChange)="onStateChange($event)" [navigable]="true" [height]="350" style="width: 75%;"
       [loading]="loading">
 
-      <!-- Checkbox Column -->
       <kendo-grid-column *ngIf="bulkEditMode" [width]="50">
         <ng-template kendoGridCellTemplate let-dataItem>
           <input type="checkbox" [value]="dataItem.empId" (change)="onResourceSelect(dataItem.empId, $event)" />
         </ng-template>
       </kendo-grid-column>
 
-      <!-- Regular Columns -->
       <kendo-grid-column field="empId" title="Emp ID" [sortable]="true" [filterable]="true"
         [width]="100"></kendo-grid-column>
       <kendo-grid-column field="name" title="Name" [sortable]="true" [filterable]="true"

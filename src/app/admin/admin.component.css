@@ -1,0 +1,207 @@
+.admin-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  width: 210px;
+  background-color: #004aad;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar-header .profile-pic img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar-menu {
+  flex-grow: 1;
+  padding: 10px 0;
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar-menu ul li {
+  padding: 12px 20px;
+}
+
+.sidebar-menu ul li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-menu ul li a:hover,
+.sidebar-menu ul li.active a,
+.sidebar-menu ul li a.active {
+  background-color: #003488;
+  border-radius: 4px;
+}
+
+.submenu {
+  padding-left: 20px;
+  background-color: #003376;
+}
+
+.submenu li {
+  padding: 8px 20px;
+}
+
+.submenu li a:hover,
+.submenu li.active a {
+  background-color: #002155;
+  border-radius: 4px;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background-color: #297cf0;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+
+.sidebar-menu{
+    margin-top: 70px;
+}
+
+.topbar-icons button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 12px;
+  font-size: 20px;
+}
+
+.content-area {
+  padding: 20px;
+  background-color: #f5f7fa;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;        /* size of the circle */
+  height: 40px;
+  border-radius: 50%; /* makes it circular */
+  background-color: #adb1ce; /* example circle color (Material Indigo) */
+  color: white;       /* icon color */
+  font-size: 24px;    /* icon size */
+}
+
+.back-button {
+  width: 30px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0047AB; /* Blue background */
+  border: 3px solid white;   /* White outer border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* Optional: subtle shadow */
+  margin-left: 70px;
+  margin-top: 20px;
+}
+
+.back-button mat-icon {
+  font-size: 24px;
+  color: white; /* White arrow */
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;         /* Vertically center both icon and text */
+  gap: 10px;                   /* Space between icon and text */
+  padding: 12px;
+}
+
+.icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle mat-icon {
+  color: #0047AB;              /* Same blue as the sidebar background */
+  font-size: 24px;
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 10px 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Add icon spacing */
+.sidebar-menu li mat-icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+/* Add the horizontal line after each li */
+.sidebar-menu li::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3); /* subtle white line */
+}
+
+/* Don't show line after last item */
+.sidebar-menu li:last-child::after {
+  content: none;
+}
+
+/* Style the submenu too (optional) */
+.submenu li {
+  padding-left: 40px;
+  font-size: 14px;
+}
+

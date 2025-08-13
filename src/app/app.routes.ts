@@ -7,10 +7,12 @@ import { canDeactivateGuard, editCanActivateGuard, formCanActivateGuard } from '
 import { MiniFormComponent } from './components/mini-form/mini-form.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
+    {path:'admin', component: AdminComponent},
     { path: "Form", component: ResourceFormComponent,canActivate: [formCanActivateGuard]},
     { path: "Edit/:empId", component: ResourceFormComponent, canDeactivate: [canDeactivateGuard],canActivate: [editCanActivateGuard]},
     { path: "Details/:empId", component: HomeComponent},
