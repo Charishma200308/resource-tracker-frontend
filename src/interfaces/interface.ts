@@ -11,3 +11,4 @@ export interface Details{
   doj:string;
   remarks:string
 }
+

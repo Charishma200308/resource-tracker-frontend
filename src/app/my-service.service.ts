@@ -4,6 +4,8 @@ import { Details } from '../interfaces/interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Environment } from '../environments/environment';
 import { jwtDecode } from 'jwt-decode';
+import { State } from '@progress/kendo-data-query';
+import { GridDataResult } from '@progress/kendo-angular-grid';
 
 
 @Injectable({
@@ -135,6 +137,15 @@ export class MyServiceService {
 
   getUsername(): string | null {
   return this.usernameSubject.value;
+}
+
+inviteUser(empId: number) {
+  const endpoint = this.myUrl + `invite/${empId}`; 
+  return this.http.post<any>(endpoint, {});
+}
+
+getPagedEmployees(request: any) {
+  return this.http.post<any>(this.myUrl + 'paged', request);
 }
 
 }

@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GridComponent, KENDO_GRID } from "@progress/kendo-angular-grid";
 import { MatIconModule } from '@angular/material/icon';
 import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
-import { process, State } from '@progress/kendo-data-query';
+import { CompositeFilterDescriptor, process, State } from '@progress/kendo-data-query';
 import { WelcomeModalComponent } from '../welcome-modal/welcome-modal.component';
 
 
@@ -38,25 +38,61 @@ export class DetailsComponent {
     this.fetchEmployees();
   }
 
-  fetchEmployees() {
-    this.loading = true;
-    this.myService.GetAllEmployees().subscribe((data: any) => {
-      const EmployeeData = data?.employees;
-      this.details = Array.isArray(EmployeeData) ? EmployeeData : [EmployeeData];
-      this.loading = false;
-      this.loadGridData();
-    });
-  }
-
-  public gridView!: GridDataResult;
-
   state: any = {
     skip: 0,
     take: 3,
     sort: [],
-
-    filter: undefined
+    filter: {
+      logic: 'and',
+      filters: []
+    }
   };
+
+  public gridView: GridDataResult = { data: [], total: 0 };
+
+  searchText: string = '';
+
+  fetchEmployees(): void {
+    this.loading = true;
+
+    const pageNumber = (this.state.skip / this.state.take) + 1;
+    const pageSize = this.state.take;
+
+    const sort = this.state.sort?.[0] || {};
+    const sortCol = sort.field || '';
+    const sortDir = sort.dir || '';
+    const filters = this.extractFilters(this.state.filter);
+
+    const searchText = filters.length
+      ? filters.filter(f => f.value.toString().trim()).map(f => f.value).join(' ')
+      : '';
+
+
+    const request = {
+      pageNumber,
+      pageSize,
+      sortColumn: sortCol,
+      sortDir: sortDir,
+      searchText: searchText,
+      filters: filters
+    };
+
+    this.myService.getPagedEmployees(request).subscribe({
+      next: (data: any) => {
+        this.details = data?.employees || [];
+        this.gridView = {
+          data: this.details,
+          total: data?.totalCount || 0
+        };
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Failed to fetch employees:', error);
+        this.loading = false;
+      }
+    });
+  }
+
 
   loading: boolean = false;
 
@@ -64,19 +100,53 @@ export class DetailsComponent {
   pageSize = 3;
   skip = 0;
 
-  onPageChange(event: any): void {
-    this.skip = event.skip;
-    this.pageSize = event.take;
-    this.state.skip = this.skip;       // Update state.skip as well
-    this.state.take = this.pageSize;   // Update state.take
-    this.loadGridData();                // Refresh the grid data view
+  onPageChange(event: PageChangeEvent): void {
+    this.state.skip = event.skip;
+    this.state.take = event.take;
+    this.fetchEmployees();
+  }
+
+  extractFilters(filterState: any): { field: string; value: string }[] {
+    const filters: any[] = [];
+
+    function flattenFilters(f: any): void {
+      if (f?.filters) {
+        f.filters.forEach(flattenFilters);
+      } else if (f?.field && f?.value !== undefined) {
+        filters.push({ field: f.field, value: f.value });
+      }
+    }
+
+    flattenFilters(filterState);
+    return filters;
+  }
+
+  onFilterChange(filter: CompositeFilterDescriptor): void {
+    this.state.filter = filter;
+    this.state.skip = 0; // reset to first page
+    this.fetchEmployees(); // reload with current filter (or none)
   }
 
 
   onStateChange(state: DataStateChangeEvent): void {
-    this.state = state;
-    this.loadGridData();
+    this.state.skip = state.skip;
+    this.state.take = state.take;
+    this.state.sort = state.sort;
+
+
+    this.fetchEmployees();
   }
+
+  onSearchChange(): void {
+    this.state.skip = 0;
+    this.state.filter = {
+      logic: 'and',
+      filters: []
+    };
+    this.fetchEmployees();
+  }
+
+
 
   loadGridData(): void {
     this.gridView = process(this.details, this.state);

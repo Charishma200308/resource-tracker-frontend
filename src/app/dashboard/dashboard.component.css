@@ -1,0 +1,104 @@
+.dashboard-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.employee-table thead tr {
+  background-color: #297cf0;
+  color: white;
+}
+
+.invite-btn {
+  background-color: #297cf0;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.invite-btn:hover {
+  background-color: #1a54b8;
+}
+
+.invite-result {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e6f0ff;
+  border: 1px solid #297cf0;
+  border-radius: 5px;
+  max-width: 400px;
+}
+.invite-btn {
+  background-color: #297cf0;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.invite-btn:hover {
+  background-color: #1b5fb8;
+}
+.dashboard-container {
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+kendo-grid {
+  flex: 1 1 auto; /* Let grid grow to fill available space */
+  min-height: 400px; /* Ensure grid is visible */
+}
+.dashboard-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.grid-wrapper {
+  margin: 0 auto; /* horizontally center */
+  width: 800px; /* fixed width to control layout */
+}
+
+.invite-btn {
+  background-color: #297cf0;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.invite-btn:hover {
+  background-color: #1f5bb5;
+}
+
+.invite-result {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: green;
+}
+
+kendo-grid {
+  margin-top: 50px; /* moves the grid 10px upwards */
+  margin-bottom: 30px;
+}
+
+::ng-deep .k-grid .k-header.k-table-th {
+  background:  linear-gradient(90deg, #bdd8e8, #b1d2e8);
+}

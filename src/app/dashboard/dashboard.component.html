@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+  <h2>Employee Dashboard</h2>
+
+  <kendo-grid
+  [kendoGridBinding]="employees"
+  [pageSize]="pageSize"
+  [skip]="skip"
+  [sortable]="true"
+  [pageable]="true"
+  style="width: 100%;height: 250px;"
+  (pageChange)="pageChange($event)"
+>
+  <kendo-grid-column field="empId" title="Emp ID" [width]="100"></kendo-grid-column>
+  <kendo-grid-column field="name" title="Name" [width]="200"></kendo-grid-column>
+  <kendo-grid-column field="dsgntion" title="Designation" [width]="200"></kendo-grid-column>
+  <kendo-grid-column field="projalloc" title="Project Allocation" [width]="200"></kendo-grid-column>
+  <kendo-grid-column title="Actions" [width]="120">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button class="invite-btn" (click)="inviteUser(dataItem.empId)">Invite</button>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid>
+
+</div>
+

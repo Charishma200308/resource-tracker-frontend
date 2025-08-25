@@ -111,15 +111,10 @@ constructor(private http: MyServiceService, private router: Router, private rout
     return;
   }
 
-  const payload = this.selectedEmployees.map(emp => {
-    const updatedEmp = { ...emp };
-
-    for (const key in fieldsToUpdate) {
-      updatedEmp[key] = fieldsToUpdate[key];
-    }
-
-    return updatedEmp;
-  });
+  const payload = {
+  employeeIds: Array.from(this.selectedResourceIds),
+  ...fieldsToUpdate
+};
 
   this.http.BulkUpdateEmployees(payload).subscribe({
     next: () => {

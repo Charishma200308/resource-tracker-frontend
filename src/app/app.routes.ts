@@ -8,10 +8,11 @@ import { MiniFormComponent } from './components/mini-form/mini-form.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AdminComponent } from './admin/admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignupComponent },
+    { path: 'login', component: LoginComponent},
+    { path: 'signup', component: SignupComponent},
     {path:'admin', component: AdminComponent},
     { path: "Form", component: ResourceFormComponent,canActivate: [formCanActivateGuard]},
     { path: "Edit/:empId", component: ResourceFormComponent, canDeactivate: [canDeactivateGuard],canActivate: [editCanActivateGuard]},
@@ -19,6 +20,7 @@ export const routes: Routes = [
     { path: "Home", component: DetailsComponent },
     { path: "help-desk", component: HelpDeskComponent },
     { path: "bulk-edit", component: MiniFormComponent },
+    { path: 'dashboard', component: DashboardComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];

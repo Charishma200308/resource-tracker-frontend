@@ -53,10 +53,12 @@
   <br>
 
   <div class="home-background">
-    <kendo-grid [kendoGridBinding]="details" [pageSize]="state.take" [skip]="state.skip" [sortable]="true"
-      [filterable]="true" [pageable]="true" [sort]="state.sort" [filter]="state.filter"
-      (dataStateChange)="onStateChange($event)" [navigable]="true" [height]="350" style="width: 75%;"
-      [loading]="loading">
+
+    <kendo-grid [data]="gridView" [pageSize]="state.take" [skip]="state.skip" [sortable]="true" [pageable]="true"
+      [sort]="state.sort" [filterable]="true" (filterChange)="onFilterChange($event)"
+      (dataStateChange)="onStateChange($event)" [loading]="loading" [navigable]="true" [height]="350"
+      style="width: 75%;">
+
 
       <kendo-grid-column *ngIf="bulkEditMode" [width]="50">
         <ng-template kendoGridCellTemplate let-dataItem>
