@@ -304,80 +304,71 @@ export class DetailsComponent {
   errorMessage: string = '';
 
   parseAndSaveCSV(csvText: string): void {
-    const lines = csvText.trim().split('\n');
-    const headers = this.parseCSVLine(lines[0]);
+  const lines = csvText.trim().split('\n');
+  const headers = this.parseCSVLine(lines[0]);
 
-    const newDetails: Details[] = [];
-    const existingMaxId = this.details.reduce((max, item) => Math.max(max, Number(item.empId) || 0), 0);
-    let saveCount = 0;
+  const newDetails: Details[] = [];
 
-    this.errorMessage = '';
+  for (let i = 1; i < lines.length; i++) {
+    const values = this.parseCSVLine(lines[i]);
+    const detail: any = {};
 
-    for (let i = 1; i < lines.length; i++) {
-      const values = this.parseCSVLine(lines[i]);
-      const detail: any = {};
+    headers.forEach((header, index) => {
+      const key = header.toLowerCase().trim();
+      const value = values[index]?.trim() ?? '';
 
-      detail.empId = existingMaxId + i;
+      switch (key) {
+        case 'name':
+          detail.name = value;
+          break;
+        case 'designation':
+        case 'dsgntion':
+          detail.dsgntion = value;
+          break;
+        case 'reporting':
+          detail.reporting = value;
+          break;
+        case 'billable':
+          detail.billable = value;
+          break;
+        case 'skills':
+          detail.skills = value;
+          break;
+        case 'project allocation':
+        case 'projalloc':
+          detail.projalloc = value;
+          break;
+        case 'location':
+          detail.location = value;
+          break;
+        case 'email id':
+        case 'mail':
+          detail.mail = value;
+          break;
+        case 'cte doj':
+        case 'doj':
+          detail.doj = value;
+          break;
+        case 'remarks':
+          detail.remarks = value;
+          break;
+      }
+    });
 
-      headers.forEach((header, index) => {
-        const key = header.toLowerCase().trim();
-        const value = values[index]?.trim() ?? '';
-
-        switch (key) {
-          case 'name':
-            detail.name = value;
-            break;
-          case 'designation':
-          case 'dsgntion':
-            detail.dsgntion = value;
-            break;
-          case 'reporting':
-            detail.reporting = value;
-            break;
-          case 'billable':
-            detail.billable = value;
-            break;
-          case 'skills':
-            detail.skills = value;
-            break;
-          case 'project allocation':
-          case 'projalloc':
-            detail.projalloc = value;
-            break;
-          case 'location':
-            detail.location = value;
-            break;
-          case 'email id':
-          case 'mail':
-            detail.mail = value;
-            break;
-          case 'cte doj':
-          case 'doj':
-            detail.doj = value;
-            break;
-          case 'remarks':
-            detail.remarks = value;
-            break;
-        }
-      });
-
-      newDetails.push(detail);
-      this.details.push(detail);
-
-      this.myService.AddEmployee(detail).subscribe({
-        next: () => {
-          saveCount++;
-          if (saveCount === lines.length - 1) {
-            this.fetchEmployees();
-            alert(`${saveCount} records imported and saved successfully.`);
-          }
-        },
-        error: (err) => {
-          alert(`Failed to save employee at line ${i + 1}. Please try again.`);
-          console.error(`Failed to save employee at line ${i + 1}`, err);
-        }
-      });
-    }
+    newDetails.push(detail);
   }
+
+  // Now call backend once for bulk insert
+  this.myService.AddEmployeesBulk(newDetails).subscribe({
+    next: () => {
+      alert(`${newDetails.length} records imported and saved successfully.`);
+      this.fetchEmployees(); // Refresh the list
+    },
+    error: (err) => {
+      console.error('Bulk save failed:', err);
+      alert('Failed to save employees in bulk. Please try again.');
+    }
+  });
+}
 
 }

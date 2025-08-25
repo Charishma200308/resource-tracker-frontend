@@ -148,4 +148,9 @@ getPagedEmployees(request: any) {
   return this.http.post<any>(this.myUrl + 'paged', request);
 }
 
+AddEmployeesBulk(employees: Details[]): Observable<any> {
+  return this.http.post(this.myUrl + 'bulk-add', employees);
+}
+
+
 }
