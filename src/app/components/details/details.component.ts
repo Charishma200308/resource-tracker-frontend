@@ -53,45 +53,39 @@ export class DetailsComponent {
   searchText: string = '';
 
   fetchEmployees(): void {
-    this.loading = true;
+  this.loading = true;
 
-    const pageNumber = (this.state.skip / this.state.take) + 1;
-    const pageSize = this.state.take;
+  const pageNumber = this.state.skip / this.state.take + 1;
+  const pageSize = this.state.take;
 
-    const sort = this.state.sort?.[0] || {};
-    const sortCol = sort.field || '';
-    const sortDir = sort.dir || '';
-    const filters = this.extractFilters(this.state.filter);
+  const sort = this.state.sort?.[0];
+  const sortColumn = sort?.field || '';
+  const sortDir = sort?.dir || '';
 
-    const searchText = filters.length
-      ? filters.filter(f => f.value.toString().trim()).map(f => f.value).join(' ')
-      : '';
+  const filters = this.extractFilters(this.state.filter);
 
+  const request = {
+    pageNumber,
+    pageSize,
+    sortColumn,
+    sortDir,
+    filters
+  };
 
-    const request = {
-      pageNumber,
-      pageSize,
-      sortColumn: sortCol,
-      sortDir: sortDir,
-      searchText: searchText,
-      filters: filters
-    };
-
-    this.myService.getPagedEmployees(request).subscribe({
-      next: (data: any) => {
-        this.details = data?.employees || [];
-        this.gridView = {
-          data: this.details,
-          total: data?.totalCount || 0
-        };
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Failed to fetch employees:', error);
-        this.loading = false;
-      }
-    });
-  }
+  this.myService.getPagedEmployees(request).subscribe({
+    next: (data: any) => {
+      this.details = data?.employees || [];
+      this.gridView = {
+        data: this.details,
+        total: data?.totalCount || 0
+      };
+      this.loading = false;
+    },
+    error: () => {
+      this.loading = false;
+    }
+  });
+}
 
 
   loading: boolean = false;
@@ -100,49 +94,33 @@ export class DetailsComponent {
   pageSize = 3;
   skip = 0;
 
-  onPageChange(event: PageChangeEvent): void {
-    this.state.skip = event.skip;
-    this.state.take = event.take;
-    this.fetchEmployees();
-  }
 
-  extractFilters(filterState: any): { field: string; value: string }[] {
-    const filters: any[] = [];
+  extractFilters(filter: CompositeFilterDescriptor): { field: string; value: string }[] {
+  const filters: { field: string; value: string }[] = [];
 
-    function flattenFilters(f: any): void {
-      if (f?.filters) {
-        f.filters.forEach(flattenFilters);
-      } else if (f?.field && f?.value !== undefined) {
-        filters.push({ field: f.field, value: f.value });
+  function flatten(filt: any) {
+    if (filt.filters) {
+      filt.filters.forEach(flatten);
+    } else {
+      if (filt.field && filt.value !== undefined && filt.value !== null && filt.value !== '') {
+        filters.push({ field: filt.field, value: filt.value.toString() });
       }
     }
-
-    flattenFilters(filterState);
-    return filters;
   }
 
-  onFilterChange(filter: CompositeFilterDescriptor): void {
-    this.state.filter = filter;
-    this.state.skip = 0; // reset to first page
-    this.fetchEmployees(); // reload with current filter (or none)
-  }
+  flatten(filter);
+  return filters;
+}
 
 
   onStateChange(state: DataStateChangeEvent): void {
-    this.state.skip = state.skip;
-    this.state.take = state.take;
-    this.state.sort = state.sort;
-
-
+    this.state = state;
     this.fetchEmployees();
   }
 
   onSearchChange(): void {
     this.state.skip = 0;
-    this.state.filter = {
-      logic: 'and',
-      filters: []
-    };
+    
     this.fetchEmployees();
   }
 
@@ -358,11 +336,10 @@ export class DetailsComponent {
     newDetails.push(detail);
   }
 
-  // Now call backend once for bulk insert
   this.myService.AddEmployeesBulk(newDetails).subscribe({
     next: () => {
       alert(`${newDetails.length} records imported and saved successfully.`);
-      this.fetchEmployees(); // Refresh the list
+      this.fetchEmployees(); 
     },
     error: (err) => {
       console.error('Bulk save failed:', err);

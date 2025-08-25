@@ -55,7 +55,7 @@
   <div class="home-background">
 
     <kendo-grid [data]="gridView" [pageSize]="state.take" [skip]="state.skip" [sortable]="true" [pageable]="true"
-      [sort]="state.sort" [filterable]="true" (filterChange)="onFilterChange($event)"
+      [sort]="state.sort" [filterable]="true" [filter]="state.filter"
       (dataStateChange)="onStateChange($event)" [loading]="loading" [navigable]="true" [height]="350"
       style="width: 75%;">
 
